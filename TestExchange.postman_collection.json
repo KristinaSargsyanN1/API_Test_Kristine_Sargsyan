@@ -1,0 +1,680 @@
+{
+	"info": {
+		"_postman_id": "dbadc07a-54c8-4146-bdb9-61a1bb260dd3",
+		"name": "TestExchange",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20426588"
+	},
+	"item": [
+		{
+			"name": "Latest rate_Speciic cur_Positive",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Check response body fields\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.rates.AMD).not.null; {console.log(\"1 US Dollar equals \" + jsonData.rates.AMD + \"Armenian dram\");};\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Base_url}}/latest.json?app_id={{KSargsyan_ID}}&symbols={{symbols}}",
+					"host": [
+						"{{Base_url}}"
+					],
+					"path": [
+						"latest.json"
+					],
+					"query": [
+						{
+							"key": "app_id",
+							"value": "{{KSargsyan_ID}}"
+						},
+						{
+							"key": "symbols",
+							"value": "{{symbols}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Latest rate_Specific_cur_Negative",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Check response body fields\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.rates.AMD).not.null; {console.log(\"1 US Dollar equals \" + jsonData.rates.AMD + \"Armenian dram\");};\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Base_url}}/latest.json?app_id={{KSargsyan_ID}}&symbols=Armenian Dram",
+					"host": [
+						"{{Base_url}}"
+					],
+					"path": [
+						"latest.json"
+					],
+					"query": [
+						{
+							"key": "app_id",
+							"value": "{{KSargsyan_ID}}"
+						},
+						{
+							"key": "symbols",
+							"value": "Armenian Dram"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Latest rate_USD_Positive_test",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp1\", moment().format(\"YYYY-MM-DDTHH:mm:ssZ\"));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check Response Body Fields\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.rates).not.null;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Check Response base currency\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.base).to.eql(\"USD\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check value of USD in object\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.rates.USD).to.eql(1);\r",
+							"});\r",
+							"\r",
+							"var bodyJson = pm.response.json();\r",
+							"tests[\"Response should not be an array\"] = !Array.isArray(bodyJson['testA']); // false\r",
+							"//tests[\"Response should not be an array\"] = !Array.isArray(bodyJson['testB']);  // true\r",
+							"\r",
+							"pm.test(\"Check Response timestamp\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.timestamp).to.eql (timestamp1);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Base_url}}/latest.json?app_id={{KSargsyan_ID}}",
+					"host": [
+						"{{Base_url}}"
+					],
+					"path": [
+						"latest.json"
+					],
+					"query": [
+						{
+							"key": "app_id",
+							"value": "{{KSargsyan_ID}}"
+						},
+						{
+							"key": "symbols",
+							"value": "show_alternative",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Latest rate_USD_Positive_test2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"const jsonData = pm.response.json();\r",
+							"pm.test(\"Test data type of the response\", () => {\r",
+							"  pm.expect(jsonData).to.be.an(\"object\");\r",
+							"  pm.expect(jsonData.disclaimer).to.be.a(\"string\");\r",
+							"  pm.expect(jsonData.license).to.be.a(\"string\");\r",
+							"  pm.expect(jsonData.timestamp).to.be.a(\"number\");\r",
+							"  pm.expect(jsonData.base).to.be.a(\"string\");\r",
+							"  pm.expect(jsonData.rates).to.be.an(\"object\");\r",
+							"  \r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Base_url}}/latest.json?app_id={{KSargsyan_ID}}",
+					"host": [
+						"{{Base_url}}"
+					],
+					"path": [
+						"latest.json"
+					],
+					"query": [
+						{
+							"key": "app_id",
+							"value": "{{KSargsyan_ID}}"
+						},
+						{
+							"key": "symbols",
+							"value": "show_alternative",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Latest rate_USD_Missing_ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Base_url}}/latest.json?app_id",
+					"host": [
+						"{{Base_url}}"
+					],
+					"path": [
+						"latest.json"
+					],
+					"query": [
+						{
+							"key": "symbols",
+							"value": "show_alternative",
+							"disabled": true
+						},
+						{
+							"key": "app_id",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Latest rate_USD_Invalid_ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Base_url}}/latest.json?app_id",
+					"host": [
+						"{{Base_url}}"
+					],
+					"path": [
+						"latest.json"
+					],
+					"query": [
+						{
+							"key": "symbols",
+							"value": "show_alternative",
+							"disabled": true
+						},
+						{
+							"key": "app_id",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Historical_rate_USD_Positive",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Base_url}}/historical/2020-05-23.json?app_id={{KSargsyan_ID}}",
+					"host": [
+						"{{Base_url}}"
+					],
+					"path": [
+						"historical",
+						"2020-05-23.json"
+					],
+					"query": [
+						{
+							"key": "app_id",
+							"value": "{{KSargsyan_ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Historical_rate_USD_Negative_Invalid_date1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Base_url}}/historical/1998-12-31.json?app_id={{KSargsyan_ID}}",
+					"host": [
+						"{{Base_url}}"
+					],
+					"path": [
+						"historical",
+						"1998-12-31.json"
+					],
+					"query": [
+						{
+							"key": "app_id",
+							"value": "{{KSargsyan_ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Historical_rate_USD_Negative_Invalid_date2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Base_url}}/historical/2022-06-30.json?app_id={{KSargsyan_ID}}",
+					"host": [
+						"{{Base_url}}"
+					],
+					"path": [
+						"historical",
+						"2022-06-30.json"
+					],
+					"query": [
+						{
+							"key": "app_id",
+							"value": "{{KSargsyan_ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Historical_rate_USD_Negative_Invalid_date3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Base_url}}/historical/2022-02-30.json?app_id={{KSargsyan_ID}}",
+					"host": [
+						"{{Base_url}}"
+					],
+					"path": [
+						"historical",
+						"2022-02-30.json"
+					],
+					"query": [
+						{
+							"key": "app_id",
+							"value": "{{KSargsyan_ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ALL_currencies",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Check currency name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.AMD).to.eql(\"Armenian Dram\");\r",
+							"    pm.expect(jsonData.UAH).to.eql(\"Ukrainian Hryvnia\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Base_url}}/currencies.json",
+					"host": [
+						"{{Base_url}}"
+					],
+					"path": [
+						"currencies.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ALL_currencies_Alternative",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Body is correct\", function () {\r",
+							"    pm.response.to.have.body(String);\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Base_url}}/currencies.json ?show_alternative=1",
+					"host": [
+						"{{Base_url}}"
+					],
+					"path": [
+						"currencies.json "
+					],
+					"query": [
+						{
+							"key": "show_alternative",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Usage",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Check response body fields\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.usage).not.null; \r",
+							"\r",
+							"    {console.log(\"This Open Exchange Rates app ID has made \" + jsonData.data.usage.requests + \"hits this month.\");};\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Base_url}}/usage.json?app_id={{KSargsyan_ID}}",
+					"host": [
+						"{{Base_url}}"
+					],
+					"path": [
+						"usage.json"
+					],
+					"query": [
+						{
+							"key": "app_id",
+							"value": "{{KSargsyan_ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "KSargsyan_ID",
+			"value": "996b0a4a4a1949be8e2c029f43650bd4",
+			"type": "string"
+		},
+		{
+			"key": "symbols",
+			"value": "GBP,EUR,UAH,RUB,AMD",
+			"type": "string"
+		}
+	]
+}
